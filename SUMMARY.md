@@ -8,3 +8,9 @@
 
 * [Aster](paper_notebook/aster.md)
 
+## daily_notebook
+
+* [linux查看进程信息](daily_notebook/linux查看进程信息.md)
+
+  
+
