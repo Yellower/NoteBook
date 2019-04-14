@@ -1,8 +1,10 @@
+# linux查看进程信息
+
 * 查看端口监听
 
   `netstat -tunlp`
 
-  ![](../img/2019-04-14 15-04-35 的屏幕截图.png)
+![](../.gitbook/assets/20190414-150435-de-ping-mu-jie-tu.png)
 
 * 查看进程详细信息
 
@@ -10,7 +12,7 @@
 
   `ps -ef | grep 进程ID`
 
-  ![](../img/2019-04-14 15-09-06 的屏幕截图.png)
+  ![](../.gitbook/assets/20190414-150906-de-ping-mu-jie-tu.png)
 
-  
+
 
