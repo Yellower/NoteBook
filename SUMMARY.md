@@ -8,7 +8,8 @@
 
 ## Paper Reading
 
-* [Aster](paper-reading/aster.md)
+* [Aster](paper-notebook/aster.md)
+	* [Aster](paper-notebook/aster.md)
 
 ## daily\_notebook
 
