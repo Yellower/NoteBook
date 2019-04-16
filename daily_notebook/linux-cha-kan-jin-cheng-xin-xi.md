@@ -12,7 +12,7 @@
 
   `ps -ef | grep 进程ID`
 
-  ![](../.gitbook/assets/20190414-150906-de-ping-mu-jie-tu.png)
+![](../.gitbook/assets/20190414-150906-de-ping-mu-jie-tu.png)
 
 
 
