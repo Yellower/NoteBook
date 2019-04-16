@@ -7,7 +7,7 @@
 
 ### 1.查看驱动对应的gcc版本
 
-参考[CUDA，NVIDIA Driver，Linux，GCC之间的版本对应关系表格](<https://blog.csdn.net/dudu815110/article/details/87167518>)
+参考[CUDA，NVIDIA Driver，Linux，GCC之间的版本对应关系表格](<https://blog.csdn.net/dudu815110/article/details/87167518)
 
 ### 2.安装新版本gcc
 
