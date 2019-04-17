@@ -49,6 +49,69 @@
 
   **TPS变换的原理可以参考：[数值方法——薄板样条插值](<https://blog.csdn.net/VictoriaW/article/details/70161180>)**
 
+  #### TPS
+
+  考虑一个插值问题：自变量$x$是2维空间的一点，函数值$y$也是2维空间中的一点，并且都在笛卡尔坐标系下表示。给定$N$个自变量$x_k$和对应的函数值$y_k$，要求插值函数
+  $$
+  \Phi(x)=\left[\begin{matrix}\Phi_1(x) \\ \Phi_2(x)\end{matrix}\right]\tag{1}
+  $$
+  使得
+  $$
+  y_k=\Phi(x_k)\tag{2}
+  $$
+  这里可以看作是求两个插值函数$\Phi_1(x)$和$\Phi_2(x)$。
+
+  TPS插值函数的形式如下：
+  $$
+  \Phi_1(x)=c+a^Tx+w^Ts(x)\tag{3}
+  $$
+  其中$c$是标量，向量$a \in \Re^{2\times1}$，向量$w\in \Re^{N\times1}$，函数向量
+  $$
+  s(x)=(\sigma(x-x_1),\sigma(x-x_2),\cdots,\sigma(x-x_N))^T
+  $$
+  其中，$\sigma(x)=||x||^2_2\log||x||_2$.
+
+  TPS插值函数的采用这种形式是经过证明得到的。
+
+  从TPS插值函数的形式可以看到它有$N+3$个参数，但是条件2只给出了N个约束，所以再添加三个约束：
+  $$
+  \sum^N_{k=1}w_k=0 
+  \$$
+  $$
+  \sum^N_{k=1}x^x_kw_k=0\tag{4}
+  $$
+  $$
+  \sum^N_{k=1}x^y_kw_k=0
+  $$
+  $x^x_k$和$x^y_k$分别表示点x的$x$坐标值和$y$坐标值。于是（2）（4）可以写成
+  $$
+  \left[\begin{matrix}S & 1_N & X \\ 1_N^T & 0 & 0 \\ X^T & 0 & 0\end{matrix}\right] \begin{bmatrix}w \\ c \\ a \end{bmatrix}=\begin{bmatrix}Y^x \\ 0 \\ 0\end{bmatrix} \tag{5}
+  $$
+  其中，$S_{ij}=\sigma(x_i-x_j)$，$1_N$表示全为1的N维向量，
+  $$
+  X=\begin{bmatrix}x^x_1&x^y_1 \\x^x_2&x^y_2 \\ \cdots & \cdots\\x^x_N&x^y_N\end{bmatrix}
+  $$
+
+  $$
+  y^x=\begin{bmatrix}y^x_1 \\ y^x_2 \\ \cdots \\y^x_N\end{bmatrix}
+  $$
+
+  可以令
+  $$
+  \Gamma=\left[\begin{matrix}S & 1_N & X \\ 1_N^T & 0 & 0 \\ X^T & 0 & 0\end{matrix}\right] 
+  $$
+  可以得到TPS的参数为：
+  $$
+  \begin{bmatrix}w \\ c \\ a\end{bmatrix} = \Gamma^{-1}\begin{bmatrix}Y^x \\ 0 \\ 0\end{bmatrix}\tag{6}
+  $$
+  把$\Phi_1$和$\Phi_2$的参数通过一个矩阵运算表示出来：
+  $$
+  \begin{bmatrix}w^x & w^y\\ c^x & c^y \\ a^x & a^y\end{bmatrix} = \Gamma^{-1}\begin{bmatrix}Y^x & Y^y\\ 0 & 0 \\ 0 & 0\end{bmatrix}\tag{7}
+  $$
+  所以，当定位网络在原图上得到控制点后，结合矫正图片上固定的控制点就可以计算出TPS变换的参数。
+
+  有了TPS变换的参数后，就可以对矫正后的图像中所有像素点坐标变换，生成采样网格。
+
   最后，作者将TPS变换整合成Grid Generator模块，整个模块都是可以微分的，所以能进行利用反向传播计算梯度。
 
 * **Sampler**
