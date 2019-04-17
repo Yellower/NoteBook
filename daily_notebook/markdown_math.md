@@ -1,6 +1,6 @@
 # Markdwon输入数学公式
 
-参考：[Markdown基本语法](<https://www.jianshu.com/p/25f0139637b7>)
+参考：[Markdown基本语法](<https://www.jianshu.com/p/25f0139637b7)
 
 ### 补充
 
