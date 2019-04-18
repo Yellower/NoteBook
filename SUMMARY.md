@@ -5,6 +5,7 @@
 ## C++ Primer Notebook
 
 * [顺序容器-删除元素](c++-primer-notebook/shun-xu-rong-qi-shan-chu-yuan-su.md)
+* [额外的String操作](c++-primer-notebook/string.md)
 
 ## Paper Reading
 
