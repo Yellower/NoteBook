@@ -1,10 +1,11 @@
-> *论文：**Aster: An Attentional Scene Text Recognizer with Flexible Rectification
+# Aster: An Attentional Scene Text Recognizer with Flexible Rectification阅读笔记
+
+> 论文：Aster: An Attentional Scene Text Recognizer with Flexible Rectification
 >
 > 发表期刊：PAMI
 >
 > 发表时间：2018
 >
-> 编辑时间：2019.4.8
 
 
 
@@ -80,6 +81,7 @@
   $$
   \sum^N_{k=1}x^x_kw_k=0\tag{4}
   $$
+  
   $$
   \sum^N_{k=1}x^y_kw_k=0
   $$
@@ -90,24 +92,23 @@
   其中，$S_{ij}=\sigma(x_i-x_j)$，$1_N$表示全为1的N维向量，
   $$
   X=\begin{bmatrix}x^x_1&x^y_1 \\x^x_2&x^y_2 \\ \cdots & \cdots\\x^x_N&x^y_N\end{bmatrix}
-  $$
-
-  $$
+$$
+  
+$$
   y^x=\begin{bmatrix}y^x_1 \\ y^x_2 \\ \cdots \\y^x_N\end{bmatrix}
-  $$
-
+$$
   可以令
-  $$
+$$
   \Gamma=\left[\begin{matrix}S & 1_N & X \\ 1_N^T & 0 & 0 \\ X^T & 0 & 0\end{matrix}\right] 
-  $$
+$$
   可以得到TPS的参数为：
-  $$
+$$
   \begin{bmatrix}w \\ c \\ a\end{bmatrix} = \Gamma^{-1}\begin{bmatrix}Y^x \\ 0 \\ 0\end{bmatrix}\tag{6}
-  $$
+$$
   把$\Phi_1$和$\Phi_2$的参数通过一个矩阵运算表示出来：
-  $$
+$$
   \begin{bmatrix}w^x & w^y\\ c^x & c^y \\ a^x & a^y\end{bmatrix} = \Gamma^{-1}\begin{bmatrix}Y^x & Y^y\\ 0 & 0 \\ 0 & 0\end{bmatrix}\tag{7}
-  $$
+$$
   所以，当定位网络在原图上得到控制点后，结合矫正图片上固定的控制点就可以计算出TPS变换的参数。
 
   有了TPS变换的参数后，就可以对矫正后的图像中所有像素点坐标变换，生成采样网格。
