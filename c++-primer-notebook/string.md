@@ -96,3 +96,9 @@ stof(s, p) //转化成float
 stod(s, p) //转化成double
 ```
 
+```c++
+//找到第一个数值
+string s2 = "pi = 3.14";
+d = stod(s2.substr(s2.find_first_of("+-.0123456789")));
+```
+
