@@ -7,6 +7,7 @@
 * [顺序容器-删除元素](c++-primer-notebook/shun-xu-rong-qi-shan-chu-yuan-su.md)
 * [额外的String操作](c++-primer-notebook/string.md)
 * [泛型算法1--初识泛型算法](c++-primer-notebook/generic_algorithm.md)
+* [泛型算法2--定制操作](c++-primer-notebook/ding_zhi_cao_zuo.md)
 
 ## Paper Reading
 
