@@ -12,6 +12,7 @@
 ## Paper Reading
 
 * [Aster](paper_notebook/aster.md)
+* [FAN](paper_notebook/FAN.md)
 
 ## daily\_notebook
 
