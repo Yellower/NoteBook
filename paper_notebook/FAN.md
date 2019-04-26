@@ -147,5 +147,30 @@ L=(1-\lambda)L_{Att}+\lambda L_{focus}
 $$
 其中，$\lambda(0 \le \lambda \lt 1)​$是可调节的参数。
 
+### 3.4 解码
 
+没有词典的情况：直接扶把概率最大的字符。
 
+有词典的情况：为词典里的每个词计算在当前概率分布下的条件概率，选择条件概率最大的单词返回。
+
+## 4.实现
+
+### 4.1 网络结构
+
+特征提取采用的是32层的ResNet，网络结构如下：
+
+![](../.gitbook/assets/2019-04-26 09-51-09 的屏幕截图.png)
+
+其中，ResNet块的核的参数形式为：$\{[kernel size, number of channels] \times \}$，每个核的${stride, pad}={0,0}$；其他卷积层的形式为$\{kernel_W \times kernel_H, stride_W \times stride_H, pad_W \times Pad_H, channels\}$
+
+输出的类别里包括一个EOS符号，代表结束。
+
+### 4.2 模型的评估
+
+作者对比了之前的识别网络，精度如下：
+
+![](../.gitbook/assets/2019-04-26 10-10-12 的屏幕截图.png)
+
+其中，Baseline代表不加FN时的测试结果。
+
+可以看到，FAN网络比其他网络精度有较大提升。
