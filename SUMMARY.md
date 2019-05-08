@@ -21,4 +21,5 @@
 * [Git添加改动](daily_notebook/git_add_file.md)
 * [ubuntu安装显卡驱动注意事项](daily_notebook/ubuntu_install_nvidia_driver.md)
 * [Markdown编辑数学公式](daily_notebook/markdown_math.md)
+* [Python Opencv的常用操作](daily_notebook/python_opencv.md)
 
