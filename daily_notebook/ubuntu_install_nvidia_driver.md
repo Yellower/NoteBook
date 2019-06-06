@@ -60,5 +60,74 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 50
 sudo update-alternatives --query gcc
 ```
 
+# 4.安装
 
+主要参考：[Ubuntu16.04服务器版安装NVIDIA显卡驱动](<https://blog.csdn.net/qq_30163461/article/details/80314630)
 
+## 4.1下载官方驱动程序
+
+官方下载地址：[http://www.geforce.cn/drivers](http://www.geforce.cn/drivers)
+
+选择对应显卡型号的驱动程序，其中操作系统选择Linux 64-bit即可。
+
+## 4.2禁止集成的nouveau驱动
+
+查看属性：
+
+```shell
+sudo ls -lh /etc/modprobe.d/blacklist.conf
+```
+
+修改属性：
+
+```shell
+#修改文件的权限
+sudo chmod 666 /etc/modprobe.d/blacklist.conf
+#用vim打开
+sudo chmod 666 /etc/modprobe.d/blacklist.conf
+```
+
+在打开的文件后添加：
+
+```
+blacklist vga16fb
+blacklist nouveau
+blacklist rivafb
+blacklist rivatv
+blacklist nvidiafb
+```
+
+并执行：
+
+```shell
+sudo update-initramfs -u
+```
+
+重启后执行：
+
+```shell
+lsmod | grep nouveau
+```
+
+如果没有输出即表明禁止成功。
+
+## 4.3开始安装
+
+对于桌面版系统需要用`sudo service lightdm stop`关闭当前图形界面，按`Alt+Ctrl+F3`进行终端执行安装。
+
+若之前安装过显卡驱动，需要先卸载掉。**建议装驱动前都执行以下该指令**，有益无害。
+
+```shell
+sudo apt-get --purge remove nvidia-*
+```
+
+该指令能卸载驱动并不保留配置文件。
+
+**安装指令**如下：
+
+```shell
+sudo chmod a+x NVIDIA-Linux-x86_64-384.130.run
+sudo ./NVIDIA-Linux-x86_64-384.130.run -no-x-check -no-nouveau-check -no-opengl-files
+```
+
+在上述指令中，`–no-opengl-files`表示只安装驱动文件，不安装OpenGL文件，这个参数最重要。`–no-x-check` 安装驱动时不检查X服务。`–no-nouveau-check` 安装驱动时不检查nouveau（注：这个选项和4.2禁止集成的nouveau驱动组成双保险，其实一项操作就可以了）。

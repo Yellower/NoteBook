@@ -22,4 +22,6 @@
 * [ubuntu安装显卡驱动注意事项](daily_notebook/ubuntu_install_nvidia_driver.md)
 * [Markdown编辑数学公式](daily_notebook/markdown_math.md)
 * [Python Opencv的常用操作](daily_notebook/python_opencv.md)
+* [pip导出所有依赖](daily_notebook/pip.md)
+* [Nginx+Uwsgi+Flask搭建并发式深度学习服务器](daily_notebook/nginx_uwsgi_flask.md)
 
