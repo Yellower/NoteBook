@@ -1,8 +1,71 @@
 # Nginx + uwsgi + Flask搭建深度学习服务端
 
-## 1.基本概念
+## 1. 基础知识
+
+### 1.1 基本概念
 
 uwsgi和nginx的介绍和相互间的关系参考：[浅谈uWSGI和Nginx](https://blog.csdn.net/shu_8708/article/details/79068581)  [uwsgi、wsgi和nginx的区别和关系](https://blog.csdn.net/CHENYAoo/article/details/83055108)
+
+* **web服务器**即用来接受客户端请求，建立连接，转发响应的程序。至于转发的内容是什么，交由**web框架**来处理，即处理这些业务逻辑，如查询数据库、生成实时信息等。Nginx就是一个web服务器，Django或Flask就是**web框架**。
+
+* Uwsgi 则是实现了**WSGI协议**的一个**web服务器**
+
+* Nginx是一个代理服务器。一旦访问量过大，客户端请求连接就要进行长时间的等待。这个时候就出来了分布式服务器，我们可以多来几台web服务器，都能处理请求。但是谁来分配客户端的请求连接和web服务器呢？Nginx就是这样一个管家的存在，由它来分配。
+
+![](../.gitbook/assets/20181015101539646.jpeg)
+
+### 1.2 常用操作
+
+* 查看端口监听
+
+  在服务器开启程序后，经常需要查看程序是否监听端口或者监听的端口是否正确
+
+  `netstat -ntlp`
+
+  `lsof -i:端口号` 查看指定端口，例查看8100端口的使用情况：`lsof -i:8100`
+
+* 测试
+
+  在开启服务后，需要测试网络、端口、程序是否正常运行，可以使用以下的工具或命令
+
+  #### Telnet
+
+  如果服务器是在阿里云或者其他云平台，通常在云平台配置完成后，都会使用Telnet工具来测试云平台和本机的网络和端口之间是否连通。
+
+  安装：`sudo apt-get install telnetd`
+
+  使用：`telnet IP 端口号`
+
+  连接是通时输出如下：
+
+  ```shell
+  (base) laifeng@laifeng-X6:~$ telnet 101.12.12.84 8000
+  Trying 101.12.12.84...
+  Connected to 106.15.182.84.
+  Escape character is '^]'.
+  ^CConnection closed by foreign host.
+  ```
+
+  #### Curl
+
+  ubuntu系统自带工具
+
+  使用：`curl URL` 
+
+  ```shell
+  (base) laifeng@laifeng-X6:~$ curl 127.0.0.1:8000/
+  curl: (7) Failed to connect to 127.0.0.1 port 8000: 拒绝连接
+  ```
+
+  #### Postman
+
+  可以配置请求的方式、参数、文件等 
+
+  #### Jmeter
+
+  支持并发测试，主要用来测试并发
+
+
 
 ## 2.Flask
 
@@ -109,17 +172,19 @@ $ python hello.py
 
     在nginx.conf中包含配置文件 
 
-    注释这两行：
+![](../.gitbook/assets/2019-06-06 15-27-25 的屏幕截图.png)
 
+    注释这两行：
+    
     ```nginx
     include /etc/nginx/conf.d/*.conf;
-    include /etc/nginx/sites-enabled/*;
+  include /etc/nginx/sites-enabled/*;
     ```
 
     添加`include /etc/nginx/sites-enabled/ocr_socket;`
-
+    
     最后的代码如下：
-
+    
     ```nginx
     #include /etc/nginx/conf.d/*.conf;
     #include /etc/nginx/sites-enabled/*;
@@ -213,6 +278,39 @@ $ python hello.py
   ```
   
   ## 5. 布署并发式深度学习任务 
+  
+  因为深度学习算法需要依赖大量的cpu和gpu计算，如果想要扩大深度学习算法服务端的并发量，根据网上的资料，通常有两种方法：增加进程数量和使用batch进行推断。
+  
+  ### 5.1 增加进程数量
+  
+  增加进程的数量其实就是相当于同时启动了多个一样的程序，所以当启动2个进程时，如果同时有2个请求，那么服务器可以同时处理这2个请求，而不需要排队等待，即并发量为2。理论上开启多个进程即可使并发量增大。
+  
+  优点：布署简单，对于任务中有多个模型也适用
+  
+  缺点：每一个进程都需要分配一定资源，对硬件要求高（需要考虑cpu数量以及服务器的显存大小）。同时当多个进程同时运行时，会比仅单个进程耗费更多的时间
+  
+  #### 布署方法 
+  
+  利用Flask框架自身就能实现多进程，或者采用uwsgi启动多个flask进程方法也是可以。
+  
+  参考3.1小节的配置文件，主要设置workers数量和延迟加载
+  
+  ```shell
+  master = true             #启用主进程
+  lazy = true               #启用延迟加载 设置多进程时，默认是主进程加载app（即主程序 import类的代码，再启动子进程，子进程不加载；启用后，先启动子进程，然后在每个子进程中加载app
+  workers = 3               #设置进程个数
+  threads = 1               #设置线程个数
+  ```
+  
+  在进行项目的过程中发现，因为每个进程需要消耗4G的gpu显存，而总显存只有16G，一张显卡上只能勉强放上4个进程。这时采用了每个显卡上分别放置不同的uwsgi程序的方法。即分别在0 1号卡启动一个uwsgi程序，每个程序使用4个进程，分别监听不同的端口，然后再使用nginx来转发请求，同时对nginx使用负载均衡策略来保证同一时刻的请求尽可能分散到各个uwsgi监听的端口。
+  
+  ### 5.2 使用batch进行推断
+  
+  这种方法较上一种方法稍微复杂一点，同时按我个人的理解这种方法更加适用于布署的深度学习任务中仅使用一个模型（或者说端到端的模型）时，因为这种情况下才比较容易把图片整合成一个batch后再对batch进行推断，当一个任务用到多个模型时，每个模型之间难免会存在不能／不易于使用batch操作的情况。
+  
+  目前的项目没有采用这种并发的方式，可以参考：[教程 | 如何使用Keras、Redis、Flask和Apache把深度学习模型部署到生产环境？](https://mp.weixin.qq.com/s/Zo1iBzAY1dBAa2pRTf-BbA?)
+  
+  
   
   
 
