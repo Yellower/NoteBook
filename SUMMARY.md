@@ -24,4 +24,5 @@
 * [Python Opencv的常用操作](daily_notebook/python_opencv.md)
 * [pip导出所有依赖](daily_notebook/pip.md)
 * [Nginx+Uwsgi+Flask搭建并发式深度学习服务器](daily_notebook/nginx_uwsgi_flask.md)
+* [Python中的sys.stdout.write](daily_notebook/sys_stdout_write.md)
 
