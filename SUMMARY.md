@@ -27,4 +27,5 @@
 * [Python中的sys.stdout.write](daily_notebook/sys_stdout_write.md)
 * [Anaconda虚拟环境使用](daily_notebook/anaconda_use.md)
 * [@property使用](daily_notebook/@property.md)
+* [Pytorch-warpctc安装](daily_notebook/pytorch_warpctc.md)
 
