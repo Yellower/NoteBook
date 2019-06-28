@@ -27,7 +27,7 @@ python setup.py install
 ```
 验证是否安装成功：
 ```python
-#进入python
+#退出warp-ctc文件夹，进入python
 >>> import torch
 >>> from warpctc_pytorch import CTCLoss #不报错即成功
 ```
