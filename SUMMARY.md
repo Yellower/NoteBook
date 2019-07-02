@@ -28,5 +28,5 @@
 * [Anaconda虚拟环境使用](daily_notebook/anaconda_use.md)
 * [@property使用](daily_notebook/@property.md)
 * [Pytorch-warpctc安装](daily_notebook/pytorch_warpctc.md)
-
 * [python格式化输出时间](daily_notebook/python_time.md)
+* [python中re模块的使用](daily_notebook/re.md)
