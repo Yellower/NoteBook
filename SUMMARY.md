@@ -30,3 +30,4 @@
 * [Pytorch-warpctc安装](daily_notebook/pytorch_warpctc.md)
 * [python格式化输出时间](daily_notebook/python_time.md)
 * [python中re模块的使用](daily_notebook/re.md)
+* [深度学习卷积特征图可视化](daily_notebook/feature_map_visualization.md)
