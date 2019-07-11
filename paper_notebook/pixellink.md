@@ -52,7 +52,7 @@ PixelLink是基于实例分割（instance segmentation）的，首先对每个�
 $$
 L = \lambda L_{pixel} + L_{link}
 $$
-连接损失中对Positive pixel计算。作者将$\lambda$的值设为2.0。**为什么？？**
+连接损失仅对Positive pixel计算。作者将$\lambda$的值设为2.0。**为什么？？**
 
 >Since L_link is calculated on positive pixels only, the classification task of pixel is more >important than that of link, and λ is set to 2.0 in all experiments.
 * 像素损失
@@ -60,7 +60,7 @@ $$
   假设图片中有$N$个文本实例，每个文本实例的权重用$B_i$表示，且第$i$个实例的面积为$area=S_i$，则实例中每个像素的权重为$w_i=\frac {B_i}{S_i}$
 
 $$
-B_i = \frac {S}{N}, S = \sum^N_i{S_i}, i \in {{1,\c_dots,N}}
+B_i = \frac {S}{N}, S = \sum^N_i{S_i}, i \in {{1,\cdots,N}}
 $$
 $S$表示所有文本像素点。计算像素损失时，负样本只选择$r*S$个损失值最大的进行计算，且$r=3$
 根据上面的公式就可以得到所有像素的权重矩阵$W$，最终的像素损失为：
@@ -70,7 +70,46 @@ $$
 其中，$L_{pixel_CE}$为文本/非文本预测的交叉熵损失矩阵。
 * 连接损失
 
+连接损失只对Positive pixel进行计算，Positive link和Negative link的损失分别计算：
+$$
+L_{link\_pos}=W_{pos\_link}L){link\_CE} \\
+L_{link\_neg}=W_{neg\_link}L){link\_CE}
+$$
+这里的$L_{link_CE}$指的是连接预测的交叉熵损失矩阵。$W_{pos\_link}$和$W{neg\_link}$分别为权重。对于像素点$(i,j)$的第$k$个连接的权重，计算公式为：
+$$
+W_{pos\_link(i,j,k)} = W(i,j)*(Y_{link}(i,j,k)==1) \\
+W_{neg\_link(i,j,k)} = W(i,j)*(Y_{link}(i,j,k)==0)
+$$
+$Y_{link}$指的是通过GT计算得出的连接矩阵，$W$指的是像素损失中计算得到的$W$。
+
+最终连接损失的计算公式为：
+$$
+L_{link}=\frac{L_{link\_pos}}{rsum(W_{pos\_link})}+\frac{L_{link\_neg}}{rsum(W_{neg\_link})}
+$$
+这里$rsum$指的是$reduce sum$，表示对张量中的所有元素求和。
+
+#### 4.3 数据扩增
+
+采用了与SSD中相似的扩增方法，额外增加了一个随机旋转的步骤。
+
+* SSD中的扩增方法（**待研究**）
+
+* 额外的随机旋转
+
+  1. 将输入图片以0.2的概率随机旋转$0, \pi/2, \pi, 3\pi/2$
+
+  2. 随机裁剪。面积在0.1-1之间随机，宽高比在0.5-2之间随机
+
+  3. 统一缩放成$512 \times 512$大小
+
+  4. 去除最短边小于10像素，面积小于20％的文本实例（计算是将这部分的损失权重设为0）
+### 5.实验
+#### 5.1实现细节
+* 采用带动量的SGD优化方法，`momentum=0.9,weight_decay=5\times10^{-4}`
+* 学习率前100步设置为$10^{-3}$，后面设置为$10^{-2}$
+* batch_size=24时，在3个GPU(GTX Titan X)上训练，每一步约0.65s，整个训练约7-8小时
+#### 5.2  模型精度
 
 
-
+​     ![](../.gitbook/assets/2019-07-11 10-04-07 的屏幕截图.png)
 
