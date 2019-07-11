@@ -11,10 +11,19 @@
 
 ### 2.安装新版本gcc
 
+#### 2.1 查看系统的gcc版本
+
+```bash
+#打开终端
+gcc -v
+#或
+gcc --version
+```
+
 #### 2.1 添加源
 
 ```bash
-sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+#如果安装失败可以添加源，sudo add-apt-repository ppa:ubuntu-toolchain-r/test
 sudo apt-get update
 ```
 
@@ -24,7 +33,6 @@ Ubuntu系统中默认的是gcc-4.8，通常都需要新的版本，目前gcc-5�
 
 ```bash
 sudo apt-get install gcc-4.8 g++-4.8
-sudo apt-get install gcc-4.9 g++-4.9
 sudo apt-get install gcc-5 g++-5
 sudo apt-get install gcc-6 g++-6
 ```
@@ -33,12 +41,15 @@ sudo apt-get install gcc-6 g++-6
 
 切换gcc版本有两种方法：
 
-##### 手动建立软链接 
+##### 手动建立软链接 (推荐)
 
 ```bash
 cd /usr/bin  #gcc指令保存的位置
+#建立gcc的软链接
 sudo rm gcc  #删除原始链接
-sudo ln -s gcc-5 g++  #新建链接
+sudo ln -s gcc-5 gcc  #新建链接 语法：ln -s 需要链接的文件/文件夹 链接后的文件/文件夹
+
+##建立g++的软链接
 sudo rm g++
 sudo ln -s g++-5 g++
 ```
@@ -57,7 +68,7 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 50
 查询系统中所有安装的gcc：
 
 ```bash
-sudo update-alternatives --query gcc
+sudo update-alternatives --query gcc 或 gcc -v 
 ```
 
 # 4.安装
