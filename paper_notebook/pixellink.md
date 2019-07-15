@@ -54,7 +54,12 @@ L = \lambda L_{pixel} + L_{link}
 $$
 连接损失仅对Positive pixel计算。作者将$\lambda$的值设为2.0。**为什么？？**
 
->Since L_link is calculated on positive pixels only, the classification task of pixel is more >important than that of link, and λ is set to 2.0 in all experiments.
+>Since L_link is calculated on positive pixels only, the classification task of pixel is more important than that of link, and λ is set to 2.0 in all experiments.
+
+**[自己的理解]**
+
+像素的文本/非文本分类相比于连接预测更加重要，所以权重更大
+
 * 像素损失
   作者考虑到每个文本实例应该具有一样的重要性，设计了一种**Instance-Balanced Cross-Entropy**，使用小文本中的像素具有较大权重，大文本中的像素权重较小，同时保证了所有文本实例的权重是一样的。
   假设图片中有$N$个文本实例，每个文本实例的权重用$B_i$表示，且第$i$个实例的面积为$area=S_i$，则实例中每个像素的权重为$w_i=\frac {B_i}{S_i}$
@@ -72,8 +77,8 @@ $$
 
 连接损失只对Positive pixel进行计算，Positive link和Negative link的损失分别计算：
 $$
-L_{link\_pos}=W_{pos\_link}L){link\_CE} \\
-L_{link\_neg}=W_{neg\_link}L){link\_CE}
+L_{link\_pos}=W_{pos\_link}L_{link\_CE} \\
+L_{link\_neg}=W_{neg\_link}L_{link\_CE}
 $$
 这里的$L_{link_CE}$指的是连接预测的交叉熵损失矩阵。$W_{pos\_link}$和$W{neg\_link}$分别为权重。对于像素点$(i,j)$的第$k$个连接的权重，计算公式为：
 $$

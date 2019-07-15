@@ -14,6 +14,7 @@
 * [Aster](paper_notebook/aster.md)
 * [FAN](paper_notebook/FAN.md)
 * [PixelLink](paper_notebook/pixellink.md)
+* [YOLO](paper_notebook/YOLO.md)
 
 ## daily\_notebook
 
