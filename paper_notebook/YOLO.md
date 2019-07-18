@@ -41,7 +41,7 @@ YOLO将输入图像划分为$S\times S$的栅格，每个栅格负责检测中�
 
 ![](../.gitbook/assets/20170420213841466.png)
 
-每个栅格预测$B$个bounding boxes和这些bounding boxes对就的confidence scores。
+每个栅格预测$B$个bounding boxes和这些bounding boxes对应的confidence scores。
 
 confidence scores表示该模型对于box的预测：该box包含物体的概率和box的坐标有多准。confidence定义为$Pr(Object)*IOU^{truth}_{pred}$，如果该单元格不包含物体，则confidence的值为0，否则让confidence等于predicted bounding box 与ground truth box的IOU。
 
@@ -69,7 +69,73 @@ $$
 
 ![](../.gitbook/assets/2019-07-17 20-54-16 的屏幕截图.png)
 
+网络结构代码：
 
+```python
+def build_network(self,
+                      images,
+                      num_outputs,
+                      alpha,
+                      keep_prob=0.5,
+                      is_training=True,
+                      scope='yolo'):
+        with tf.variable_scope(scope):
+            with slim.arg_scope(
+                [slim.conv2d, slim.fully_connected],
+                activation_fn=leaky_relu(alpha),
+                weights_regularizer=slim.l2_regularizer(0.0005),
+                weights_initializer=tf.truncated_normal_initializer(0.0, 0.01)
+            ):
+                #输入图片大小为448*448,上下左右各padding 3,则图片大小为454*454(448+6)
+                net = tf.pad(
+                    images, np.array([[0, 0], [3, 3], [3, 3], [0, 0]]),
+                    name='pad_1') #手动对输入图片进行padding，四个维度：batch_size,width,height,channel
+                #根据VALID卷积操作，输出大小为(454-7+1)/2=224 公式：ceil((input-k_size+1)/strip)
+                net = slim.conv2d(
+                    net, 64, 7, 2, padding='VALID', scope='conv_2')
+                #再pooling,输出大小为224/2=112
+                net = slim.max_pool2d(net, 2, padding='SAME', scope='pool_3')
+                net = slim.conv2d(net, 192, 3, scope='conv_4')
+                net = slim.max_pool2d(net, 2, padding='SAME', scope='pool_5')
+                net = slim.conv2d(net, 128, 1, scope='conv_6')
+                net = slim.conv2d(net, 256, 3, scope='conv_7')
+                net = slim.conv2d(net, 256, 1, scope='conv_8')
+                net = slim.conv2d(net, 512, 3, scope='conv_9')
+                net = slim.max_pool2d(net, 2, padding='SAME', scope='pool_10')
+                net = slim.conv2d(net, 256, 1, scope='conv_11')
+                net = slim.conv2d(net, 512, 3, scope='conv_12')
+                net = slim.conv2d(net, 256, 1, scope='conv_13')
+                net = slim.conv2d(net, 512, 3, scope='conv_14')
+                net = slim.conv2d(net, 256, 1, scope='conv_15')
+                net = slim.conv2d(net, 512, 3, scope='conv_16')
+                net = slim.conv2d(net, 256, 1, scope='conv_17')
+                net = slim.conv2d(net, 512, 3, scope='conv_18')
+                net = slim.conv2d(net, 512, 1, scope='conv_19')
+                net = slim.conv2d(net, 1024, 3, scope='conv_20')
+                net = slim.max_pool2d(net, 2, padding='SAME', scope='pool_21')
+                net = slim.conv2d(net, 512, 1, scope='conv_22')
+                net = slim.conv2d(net, 1024, 3, scope='conv_23')
+                net = slim.conv2d(net, 512, 1, scope='conv_24')
+                net = slim.conv2d(net, 1024, 3, scope='conv_25')
+                net = slim.conv2d(net, 1024, 3, scope='conv_26')
+                net = tf.pad(
+                    net, np.array([[0, 0], [1, 1], [1, 1], [0, 0]]),
+                    name='pad_27')
+                net = slim.conv2d(
+                    net, 1024, 3, 2, padding='VALID', scope='conv_28')
+                net = slim.conv2d(net, 1024, 3, scope='conv_29')
+                net = slim.conv2d(net, 1024, 3, scope='conv_30')
+                net = tf.transpose(net, [0, 3, 1, 2], name='trans_31')
+                net = slim.flatten(net, scope='flat_32')
+                net = slim.fully_connected(net, 512, scope='fc_33')
+                net = slim.fully_connected(net, 4096, scope='fc_34')
+                net = slim.dropout(
+                    net, keep_prob=keep_prob, is_training=is_training,
+                    scope='dropout_35')
+                net = slim.fully_connected(
+                    net, num_outputs, activation_fn=None, scope='fc_36')
+        return net
+```
 
 ### 5.损失函数
 
@@ -83,9 +149,10 @@ $$
 
 * 方法
 
-对于Bounding Box的列表B及其对应的置信度S,采用下面的计算方式：选择具有最大score的检测框M,将其从B集合中移除并加入到最终的检测结果D中.通常将B中剩余检测框中与M的IOU大于阈值Nt的框从B中移除.重复这个过程,直到B为空。
+对于Bounding Box的列表B及其对应的置信度S，采用下面的计算方式：选择具有最大score的检测框M，将其从B集合中移除并加入到最终的检测结果D中。通常将B中剩余检测框中与M的IOU大于阈值Nt的框从B中移除。重复这个过程，直到B为空。
 常用的阈值是 `0.3 ~ 0.5`。
-其中用到排序,可以按照右下角的坐标排序或者面积排序,也可以按计算的得分或概率排序。
+
+常用的排序方式有：1）按计算的得分或概率排序 2）按右下角的坐标排序 3）按面积排序
 
 ![](../.gitbook/assets/20170420214324204.gif)
 
