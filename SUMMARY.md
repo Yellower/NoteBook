@@ -34,4 +34,5 @@
 * [python中re模块的使用](daily_notebook/re.md)
 * [深度学习卷积特征图可视化](daily_notebook/feature_map_visualization.md)
 * [输出特征图尺寸计算](daily_notebook/feature_map_size_calc.md)
+* [Python系列](daily_notebook/python.md)
 
