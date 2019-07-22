@@ -15,6 +15,7 @@
 * [FAN](paper_notebook/FAN.md)
 * [PixelLink](paper_notebook/pixellink.md)
 * [YOLO](paper_notebook/YOLO.md)
+* [TextSnake](paper_notebook/TextSnake.md)
 
 ## daily\_notebook
 

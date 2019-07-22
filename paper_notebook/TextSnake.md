@@ -50,3 +50,76 @@ $$
 
 利用FCN网络预测得到热图，包括TCL（text center line）和TR（text regions）以及半径$r, cos\theta, sint\theta$等几何参数。对TCL进行TR的**mask操作??**得到Masked TCL，再利用`disjoint set`算法得到文本中心线实例分割结果。最后利用`striding algorithm`重建文本的检测框，得到最终的检测结果。
 
+#### 3.3网络结构
+
+网络结构如图：
+
+![](../.gitbook/assets/2019-07-22 15-08-51 的屏幕截图.png)
+
+整体网络结构采用了类似FCN的语义分割模型，同时加入了FPN和UNET中使用的特征融合结构。主干网络采用分类网络，VGG16/19或ResNet，论文中作者为了方便与其他检测网络进行对比采用了VGG16作为主干网络。
+
+特征融合结构的定义如下：
+$$
+h_1 = f_5 \\
+h_i = conv_{3\times 3}(conv_{1 \times 1}[f_{i-1};UpSampling_{\times2}(h_{i-1})]),for i \geq 2
+$$
+$f_i$为第$i$个阶段的特征图。
+
+经过特征融合后，特征图的大小为原图大小的1/2，所以对融合后的特征图$h_5$进行上采样：
+$$
+h_{final}=UpSampling_{\times 2}(h_5) \\
+P=conv_{1 \times 1}(conv_{3 \times 3}(h_{final}))
+$$
+输出$P \in R^{h \times w \times 7}$，其中4个通道为TR/TCL的logits，剩下3通道分别为$r, con \theta, sin \theta$。
+
+在最终的预测输出时，对TR/TCL进行softmax处理，同时对$con \theta, sin\theta$正则化处理，使用它们的平方和为1。
+
+#### 3.4 推断（Inference）
+
+(1) 前向过程，得到TR、TCL和几何信息的热图；
+
+(2) 对TR和TCL分别根据阈值$T_{tcl} T_{tr}$进行阈值处理；
+
+(3) 求TR TCL的交集得到最终预测的TCL；
+
+(4) 运用`striding algorithm`提取TCL的中心点，并重建文本区域
+
+**striding algorithm**
+
+流程如图：
+
+![](../.gitbook/assets/2019-07-22 15-30-45 的屏幕截图.png)
+
+大致流程为：随机选择一个初始点，将它`centralizing`；然后从该点按一定的步长沿相反方向搜索得到两个边缘点，这一步叫做`striding`；再对这两个点`centralizing`，反复，最终得到TCL的中心线；最后，沿中心线`sliding`重建文本区域。
+
+![](../.gitbook/assets/2019-07-22 15-37-31 的屏幕截图.png)
+
+* Act(a) Centralizing
+* Act(b) Striding
+* Act(c) Sliding
+
+#### 3.5 标签生成
+
+#### 3.6 目标函数
+
+采用端到端训练方式，目标函数为：
+$$
+L=L_{cls}+L_{reg} \\
+L_{cls}=\lambda_1L_{tr}+\lambda_2L_{tcl} \\
+L_{reg}=\lambda_3L_{r}+\lambda_4L_{sin}+\lambda_5L_{cos}
+$$
+$L_{tr}, L_{tcl}$分别为TR、TCL的交叉熵损失。$L_{r}, L_{sin}, L_{cos}$采用`Smoothed-L1`损失：
+
+![](../.gitbook/assets/2019-07-22 15-45-32 的屏幕截图.png)
+
+在TCL区域外的几何损失均设为0。且在实验中常系数$\lambda_1,\lambda_2,\lambda_3,\lambda_4,\lambda_5$均设为1。
+
+### 4.实验
+
+在TotalText数据集上的测试结果为：
+
+![](../.gitbook/assets/2019-07-22 15-49-36 的屏幕截图.png)
+
+在SCUT-CTW1500数据集上的测试结果为：
+
+![](../.gitbook/assets/2019-07-22 15-49-48 的屏幕截图.png)
