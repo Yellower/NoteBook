@@ -24,3 +24,15 @@ $$
 \log \lg \ln
 $$
 
+#### 3.比较
+
+```python
+\lt \gt \leq \geq \neq \approx
+```
+
+$$
+\lt \gt \leq \geq \neq \approx
+$$
+
+
+
