@@ -16,6 +16,7 @@
 * [PixelLink](paper_notebook/pixellink.md)
 * [YOLO](paper_notebook/YOLO.md)
 * [TextSnake](paper_notebook/TextSnake.md)
+* [Multi-Oriented Scene Text Detection](paper_notebook/Multi-oriented_scene_text_detection.md)
 
 ## daily\_notebook
 
@@ -37,4 +38,5 @@
 * [输出特征图尺寸计算](daily_notebook/feature_map_size_calc.md)
 * [Python系列](daily_notebook/python.md)
 * [Tensorflow系列](daily_notebook/Tensorflow.md)
+* [Linux中`find`命令使用](daily_notebook/linux_find.md)
 
