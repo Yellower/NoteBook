@@ -23,7 +23,14 @@
 #### 1.1 场景文字检测具有挑战性
 
 * 内因
+
+  1. 自然场景中的文本可能以任意角度出现；
+  2. 文本的长宽比差异很大；
+  3. 文本可能以字符、单词或行文本的形式存在，算法很难确定文本的边界
+
 * 外因
+
+  来自于环境。导致图片有噪声、模糊或遮挡。
 
 #### 1.2 算法流程
 
@@ -73,3 +80,52 @@
 
 #### 2.3 Position-Sensitive Segmentation
 
+以前的基于分割的文字检测算法都直接生成分割图，分割图表示每个像素属于文本类别的概率，但是直接通过分割的结果图很难将文本区分开。所以，这里参考InstanceFCN中采用的positiion-sensitive segmentation。
+
+**原理：**预测的像素之间带有相对位置的信息。将每个bounding box分成$g\times g$个bin，$g$设为2，则四个bin分别代表文本的左上、右上、右下和左下四个区域，然后利用分割的方法为每个像素预测属于这4个bin的概率，而不是属于文本的概率。
+
+Position-sensitive segmentation与Corner detection共用一个网络，利用$F_3,F_4,F_7,F_8,F_9$这几层特征图通过上采样得到，最后输出的通道数为$g \times g$。
+
+### 3. 训练和推断
+
+#### 3.1 标签生成
+
+利用Ground Truth分别生成角点检测和分割的标签
+
+![](../.gitbook/assets/2019-07-30 20-04-38 的屏幕截图.png)
+
+#### 3.2 损失函数
+
+损失函数由三部分组成：
+
+![](../.gitbook/assets/2019-07-30 20-08-01 的屏幕截图.png)
+
+其中，$L_{conf}$为角点的confidence score损失，采用交叉熵损失函数：
+
+![](../.gitbook/assets/2019-07-30 20-11-29 的屏幕截图.png)
+
+$L_{loc}$为角点的offset回归损失，使用`Smooth L1 loss`:
+
+![](../.gitbook/assets/2019-07-30 20-11-38 的屏幕截图.png)
+
+$L_{seg}$为分割损失，采用`Dice loss`:
+
+![](../.gitbook/assets/2019-07-30 20-11-48 的屏幕截图.png)
+
+#### 3.3 推断
+
+对输入图片计算角点和position-sensitive segmentation图，通过采样和组合角点生成候选框，通过`Rotated Position-Sensitive ROI Average pooling layer `利用分割图对候选框打分，最后进行过滤得分低的候选框。
+
+#### 3.4 训练
+
+在`SynthText`数据上预训练1个epoch，然后在其他数据集上进行微调。
+
+#### 4. 实验
+
+![](../.gitbook/assets/2019-07-30 20-21-59 的屏幕截图.png)
+
+![](../.gitbook/assets/2019-07-30 20-22-08 的屏幕截图.png)
+
+![](../.gitbook/assets/2019-07-30 20-24-02 的屏幕截图.png)
+
+![](../.gitbook/assets/2019-07-30 20-24-51 的屏幕截图.png)
