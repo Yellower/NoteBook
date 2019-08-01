@@ -17,6 +17,7 @@
 * [YOLO](paper_notebook/YOLO.md)
 * [TextSnake](paper_notebook/TextSnake.md)
 * [Multi-Oriented Scene Text Detection](paper_notebook/Multi-oriented_scene_text_detection.md)
+* [EAST](paper_notebook/EAST.md)
 
 ## daily\_notebook
 
