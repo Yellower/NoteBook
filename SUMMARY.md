@@ -18,6 +18,7 @@
 * [TextSnake](paper_notebook/TextSnake.md)
 * [Multi-Oriented Scene Text Detection](paper_notebook/Multi-oriented_scene_text_detection.md)
 * [EAST](paper_notebook/EAST.md)
+* [Learning Shape-Aware Embedding for Scene Text Detection](paper_notebook/Shape-aware_embedding_for_text_detection.md)
 
 ## daily\_notebook
 
