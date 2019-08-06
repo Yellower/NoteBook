@@ -42,4 +42,5 @@
 * [Python系列](daily_notebook/python.md)
 * [Tensorflow系列](daily_notebook/Tensorflow.md)
 * [Linux中`find`命令使用](daily_notebook/linux_find.md)
+* [FPN网络和OHEM](daily_notebook/FPN_and_OHEM.md)
 
