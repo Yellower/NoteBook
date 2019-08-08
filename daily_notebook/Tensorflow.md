@@ -13,7 +13,7 @@ tf.nn.sparse_softmax_cross_entropy_with_logits(
 
 `logits`为神经网络输出层的输出，shape为`[batch_size, num_classes]`；`labels`为标签，shape为`[batch_size]`。
 
-内部原理：（参考[[TensorFlow]关于tf.nn.sparse_softmax_cross_entropy_with_logits()](https://blog.csdn.net/ZJRN1027/article/details/80199248))
+内部原理：（参考[[TensorFlow]关于tf.nn.sparse_softmax_cross_entropy_with_logits(](https://blog.csdn.net/ZJRN1027/article/details/80199248))
 
 1. 对`logits`进行`softmax`操作
 2. 对`labels`进行`one-hot`编码
