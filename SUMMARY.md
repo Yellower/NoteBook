@@ -43,4 +43,6 @@
 * [Tensorflow系列](daily_notebook/Tensorflow.md)
 * [Linux中`find`命令使用](daily_notebook/linux_find.md)
 * [FPN网络和OHEM](daily_notebook/FPN_and_OHEM.md)
+* [滑动平均模型](daily_notebook/moving_average_model.md)
+* [Tensorflow利用多GPU进行并行训练](daily_notebook/Tensorflow_training_with_multi_gpus.md)
 
