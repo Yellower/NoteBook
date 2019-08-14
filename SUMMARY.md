@@ -45,4 +45,5 @@
 * [FPN网络和OHEM](daily_notebook/FPN_and_OHEM.md)
 * [滑动平均模型](daily_notebook/moving_average_model.md)
 * [Tensorflow利用多GPU进行并行训练](daily_notebook/Tensorflow_training_with_multi_gpus.md)
+* [vscode 实时同步代码到远程服务器](daily_notebook/vscode_sync_code_with_server.md)
 
