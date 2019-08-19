@@ -47,4 +47,5 @@
 * [Tensorflow利用多GPU进行并行训练](daily_notebook/Tensorflow_training_with_multi_gpus.md)
 * [vscode 实时同步代码到远程服务器](daily_notebook/vscode_sync_code_with_server.md)
 * [Python 图像处理](daily_notebook/python_image_processing.md)
+* [tensorflow中seq2seq模块的应用](daily_notebook/seq2seq_tf.md)
 
