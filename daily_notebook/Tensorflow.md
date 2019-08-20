@@ -112,3 +112,46 @@ losses = tf.get_collection(tf.GraphKeys.LOSSES, clone_scope)#clone_scope是一�
 total_loss = tf.add_n(losses)
 ```
 
+### 6. `tf.reduce_mean()`
+
+获得张量在某维度上均值
+
+函数说明：
+
+```python
+tf.compat.v2.reduce_mean(
+    input_tensor,
+    axis=None,    
+    keepdims=False,  #False维度减1，True时保存张量shape不变
+    name=None
+)
+```
+
+```python
+x = tf.constant([[1., 1.], [2., 2.]])
+tf.reduce_mean(x)  # 1.5
+tf.reduce_mean(x, 0)  # [1.5, 1.5]
+tf.reduce_mean(x, 1)  # [1.,  2.]
+tf.reduce_mean(x, [0,1]) # 1.5
+```
+
+### 7.获取张量的尺寸 
+
+```python
+# tf.shape() 方法
+>>> tf.shape(v)
+<tf.Tensor 'Shape:0' shape=(2,) dtype=int32>
+ 
+# shape 属性
+>>> v.shape
+TensorShape([Dimension(100), Dimension(100)])
+ 
+# get_shape() 方法
+>>> v.get_shape()
+TensorShape([Dimension(100), Dimension(100)])
+
+#as_list()
+>>>v.shape.as_list()   #[100, 100]
+>>>v.get_shape().as_list()   #[100, 100]
+```
+
