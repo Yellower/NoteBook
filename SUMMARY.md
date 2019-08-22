@@ -20,6 +20,7 @@
 * [EAST](paper_notebook/EAST.md)
 * [Learning Shape-Aware Embedding for Scene Text Detection](paper_notebook/Shape-aware_embedding_for_text_detection.md)
 * [ResNet](paper_notebook/ResNet.md)
+* [CTPN](paper_notebook/CTPN.md)
 
 ## daily\_notebook
 
