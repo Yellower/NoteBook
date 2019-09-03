@@ -155,3 +155,21 @@ TensorShape([Dimension(100), Dimension(100)])
 >>>v.get_shape().as_list()   #[100, 100]
 ```
 
+### 8.rnn实现
+
+```python
+############实现多层LSTM############
+#定义循环体
+cell = tf.nn.rnn.MultiRNNCell([
+tf.nn.rnn_cell.BasicLSTMCell(HIDDEN_SIZE) for _ in range(NUM_LAYERS)
+])
+
+outputs, _ = tf.nn.dynamic_rnn(cell, input, dytpe=tf.float32) #outputs是顶层LSTM在每一步的输出，维度为[batch_size, time, HIDDEN_SIZE]
+
+############实现双向LSTM################
+cell_fw = tf.nn.rnn_cell.BasicLSTMCell(HIDDEN_SIZE)
+cell_bw = tf.nn.rnn_cell.BasicLSTMCell(HIDDEN_SIZE)
+
+outputs, _ = tf.nn.bidirectional_dynamic_rnn(cell_fw, cell_bw, input)#outputs是（output_fw, output_bw）的元组，每一个的维度与前面类似
+```
+

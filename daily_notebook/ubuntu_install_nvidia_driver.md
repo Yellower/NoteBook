@@ -142,3 +142,4 @@ sudo ./NVIDIA-Linux-x86_64-384.130.run -no-x-check -no-nouveau-check -no-opengl-
 ```
 
 在上述指令中，`–no-opengl-files`表示只安装驱动文件，不安装OpenGL文件，这个参数最重要。`–no-x-check` 安装驱动时不检查X服务。`–no-nouveau-check` 安装驱动时不检查nouveau（注：这个选项和4.2禁止集成的nouveau驱动组成双保险，其实一项操作就可以了）。
+
