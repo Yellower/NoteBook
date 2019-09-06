@@ -20,7 +20,7 @@ CUDA版本与Tensorflow版本对应关系：[CUDA_Tensorflow版本](https://www.
 sudo bash cuda_8.0.61_375.26_linux.run
 ```
 
-依次选择accept、n(不安装驱动)、y、y、y，完成安装。
+依次选择accept、n(不安装驱动)、y、y(软链接可以不建立)、y（可以不安装samples），完成安装。
 
 （3）设置环境变量
 
@@ -32,9 +32,13 @@ export PATH=$PATH:/usr/local/cuda-8.0/bin
 export CUDA_HOME=$CUDA_HOME:/usr/local/cuda-8.0
 ```
 
-（4）测试
+（4）版本查看
 
-
+```bash
+cat /usr/local/cuda/version.txt
+或
+nvcc -V
+```
 
 ### 2.安装cudnn
 
