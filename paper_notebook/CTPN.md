@@ -64,3 +64,20 @@ $$
 
 ![](../.gitbook/assets/2019-08-22 20-09-57 的屏幕截图.png)
 
+### 补充
+
+（1）网络结构参数
+
+![](../.gitbook/assets/2019-09-06 14-33-35 的屏幕截图.png)
+
+（2）
+
+Smooth L1损失：
+$$
+smooth_{L1}(x)=\left\{
+\begin{aligned}
+0.5x^2 & &if \vline x \vline \lt 1 \\
+ \vline x \vline -0.5 && otherwise 
+\end{aligned}
+\right.
+$$
