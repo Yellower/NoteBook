@@ -8,7 +8,7 @@ pytorch安装参考官网安装方法：[Pytorch](https://pytorch.org/)
 
 ```shell
 #cuda 8.0
-pip install torch==1.1.0 -f https://download.pytorch.org/whl/cu80/stable # CUDA 8.0 build
+pip install torch==1.1.0 -f https://download.pytorch.org/whl/cu80/stable .html# CUDA 8.0 build
 ```
 安装torchvision
 ```shell
@@ -30,5 +30,17 @@ python setup.py install
 #退出warp-ctc文件夹，进入python
 >>> import torch
 >>> from warpctc_pytorch import CTCLoss #不报错即成功
+```
+
+常见错误：
+
+`python setup.py install`找不到`cuda_runtime_api.h`
+
+原因：CUDA_HOME路径设置错误或者同时安装多个CUDA，正常情况下`CUDA_HOME=/usr/local/cuda`，从错误的输出日志中可以看到指定的路径，形式为：-l/usr/local/cuda.....
+
+解决办法：
+
+```bash
+export CUDA_HOME=/usr/local/cuda #设置CUDA_HOME为cuda路径，且只有一个路径
 ```
 
