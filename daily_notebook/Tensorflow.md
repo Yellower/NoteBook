@@ -173,3 +173,47 @@ cell_bw = tf.nn.rnn_cell.BasicLSTMCell(HIDDEN_SIZE)
 outputs, _ = tf.nn.bidirectional_dynamic_rnn(cell_fw, cell_bw, input)#outputs是（output_fw, output_bw）的元组，每一个的维度与前面类似
 ```
 
+### 9.上采样
+
+* resize
+
+```python
+input_shape = tf.shape(input_data)
+output = tf.image.resize_nearest_neighbor(input_data, (input_shape[1] * 2, input_shape[2] * 2))
+```
+
+* 反卷积
+
+返回卷积操作的输入结果，`filters`为输出深度，`kernel_size`卷积核尺寸
+
+```python
+tf.layers.conv2d_transpose(
+    inputs,
+    filters,
+    kernel_size,
+    strides=(1, 1),
+    padding='valid',
+    data_format='channels_last',
+    activation=None,
+    use_bias=True,
+    kernel_initializer=None,
+    bias_initializer=tf.zeros_initializer(),
+    kernel_regularizer=None,
+    bias_regularizer=None,
+    activity_regularizer=None,
+    kernel_constraint=None,
+    bias_constraint=None,
+    trainable=True,
+    name=None,
+    reuse=None
+)
+
+#示例：上采样2倍，即输出为输入尺寸的2倍
+output = tf.layers.conv2d_transpose(input_data, numm_filter, kernel_size=2, padding='same',
+                                            strides=(2,2), kernel_initializer=tf.random_normal_initializer())
+#从正向卷积看输出为输入的1／2，所以反卷积输出为输入的2倍
+#tensorflow中卷积输出大小：padding='same' out = ceil(in / stride); padding='valid' out = ceil((in - k_size + 1)/stride
+```
+
+
+
