@@ -49,4 +49,6 @@
 * [vscode 实时同步代码到远程服务器](daily_notebook/vscode_sync_code_with_server.md)
 * [Python 图像处理](daily_notebook/python_image_processing.md)
 * [tensorflow中seq2seq模块的应用](daily_notebook/seq2seq_tf.md)
+* [TTA: Test-time autmentation](daily_notebook/test_time_augmentation.md)
+* [YOLO中anchors的设置](daily_notebook/anchors_gen_for_yolo.md)
 
