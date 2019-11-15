@@ -51,4 +51,5 @@
 * [tensorflow中seq2seq模块的应用](daily_notebook/seq2seq_tf.md)
 * [TTA: Test-time autmentation](daily_notebook/test_time_augmentation.md)
 * [YOLO中anchors的设置](daily_notebook/anchors_gen_for_yolo.md)
+* [模型融合方法](daily_notebook/model_ensemble.md)
 
