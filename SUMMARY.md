@@ -21,6 +21,8 @@
 * [Learning Shape-Aware Embedding for Scene Text Detection](paper_notebook/Shape-aware_embedding_for_text_detection.md)
 * [ResNet](paper_notebook/ResNet.md)
 * [CTPN](paper_notebook/CTPN.md)
+* [DenseNet](paper_notebook/densenet.md)
+* [SENet](paper_notebook/SENet.md)
 
 ## daily\_notebook
 
