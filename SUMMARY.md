@@ -23,6 +23,7 @@
 * [CTPN](paper_notebook/CTPN.md)
 * [DenseNet](paper_notebook/densenet.md)
 * [SENet](paper_notebook/SENet.md)
+* [MobileNet](paper_notebook/MobileNet.md)
 
 ## daily\_notebook
 
