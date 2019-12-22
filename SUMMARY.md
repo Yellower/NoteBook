@@ -24,6 +24,7 @@
 * [DenseNet](paper_notebook/densenet.md)
 * [SENet](paper_notebook/SENet.md)
 * [MobileNet](paper_notebook/MobileNet.md)
+* [InceptionNet](paper_notebook/Inception.md)
 
 ## daily\_notebook
 
