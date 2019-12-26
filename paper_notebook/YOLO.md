@@ -2,9 +2,9 @@
 
 > 论文：You Only Look Once: Unified, Real-Time Object Detection
 >
-> 发表期刊：
+> 发表期刊：CVPR
 >
-> 发表时间：
+> 发表时间：2016
 
 ### 1.摘要
 
@@ -53,7 +53,9 @@ confidence scores表示该模型对于box的预测：该box包含物体的概率
 
 **注意**
 
-类条件概率是针对每个栅格的，而confidence scores则是针对每个bounding box的。在测试阶段，将box的confidence和类条件概率相乘即可以得到box关于某个类别的物体的confidence:
+类条件概率是针对每个栅格的，而confidence scores则是针对每个bounding box的。
+
+在**测试阶段**，将box的confidence和类条件概率相乘即可以得到box关于某个类别的物体的confidence:
 $$
 Pr(Class_i|Object)*Pr(Object)*IOU^{turth}_{pred}=Pr(Class_i)*IOU^{truth}_{pred}
 $$
@@ -139,7 +141,13 @@ def build_network(self,
 
 ### 5.损失函数
 
+![](F:\NoteBook\.gitbook\assets\yolo_loss.png)
 
+在**训练过程**中：
+
+$1^{obj}_{ij}$：判断第$i$个网络中的第$j$个bbox是否负责这个object。假设ground truth的中心在某栅格中，则利用前向过程得到该栅格的两个predict bbox的坐标，计算它们与ground truth的IOU，IOU大的负责检测该目标。另一个bbox不负责，即不计算损失。
+
+![](F:\NoteBook\.gitbook\assets\yolo_label.webp)
 
 ### 6.非极大值抑制(NMS)
 
