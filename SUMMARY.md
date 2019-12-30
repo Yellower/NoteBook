@@ -15,6 +15,8 @@
 * [FAN](paper_notebook/FAN.md)
 * [PixelLink](paper_notebook/pixellink.md)
 * [YOLO](paper_notebook/YOLO.md)
+* [YOLOV2](paper_notebook/YOLO_V2.md)
+* [YOLOV3](paper_notebook/YOLO_V3.md)
 * [TextSnake](paper_notebook/TextSnake.md)
 * [Multi-Oriented Scene Text Detection](paper_notebook/Multi-oriented_scene_text_detection.md)
 * [EAST](paper_notebook/EAST.md)
