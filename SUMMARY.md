@@ -9,6 +9,9 @@
 * [泛型算法1--初识泛型算法](c++-primer-notebook/generic_algorithm.md)
 * [泛型算法2--定制操作](c++-primer-notebook/ding_zhi_cao_zuo.md)
 
+## 数据结构
+* [排序算法](data_structure/排序算法.md)
+
 ## Paper Reading
 
 * [Aster](paper_notebook/aster.md)
