@@ -1,3 +1,5 @@
+
+
 # Anaconda虚拟环境使用
 
 ### 1. 创建虚拟环境
@@ -44,7 +46,7 @@
 conda remove -n env_name --all
 ```
 
-### 4.其他
+### 4. 其他
 
 * 查看安装的虚拟环境
 
@@ -52,16 +54,33 @@ conda remove -n env_name --all
   conda env list
   ```
 
-* 安装cuda cudnn
+* 安装CUDA和cudnn
 
-  如果系统安装了cuda和cudnn，默认情况下虚拟环境中自动使用系统的。如果需要的版本与系统的版本不匹配，可以使用下列命令安装
+  如果系统安装了`CUDA`和`cudnn`，默认情况下虚拟环境中自动使用系统的。如果需要的版本与系统的版本不匹配，可以使用下列命令安装
 
   ```shell
-  conda install cuda=9.0
-  conda install cudnn=7.1.2
+  # 先安装指定版本的cuda，自动安装对应版本的cudann
+  conda install cudatoolkit=9.0
+  conda install cudnn
   ```
 
+* 配置国内镜像源
+```shell
+# 查看当前下载源
+conda config --show channel
+
+# 方法一：命令行设置
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --set show_channel_urls yes
+
+# 方法二：.condrc文件设置
+channels:
+     - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+     - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+     - defaults
+show_channel_urls: true
+```
+
   
-
-
 
