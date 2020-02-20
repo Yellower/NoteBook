@@ -524,5 +524,149 @@ tf.pad(t, paddings, "CONSTANT")  # [[0, 0, 0, 0, 0, 0, 0],
                                  #  [0, 0, 0, 0, 0, 0, 0]]
 ```
 
+### 17.py_function
 
+把一个python函数包装成tensorflow op
+
+```python
+tf.py_function(
+    func,
+    inp,
+    Tout,
+    name=None
+)
+```
+
+### 18.range
+
+生成数字序列
+
+```python
+start = 3
+limit = 18
+delta = 3
+tf.range(start, limit, delta)  # [3, 6, 9, 12, 15]
+
+start = 3
+limit = 1
+delta = -0.5
+tf.range(start, limit, delta)  # [3, 2.5, 2, 1.5]
+
+limit = 5
+tf.range(limit)  # [0, 1, 2, 3, 4]
+```
+
+### 19.repeat
+
+重复inputs中的元素
+
+### 20.reshape
+
+```python
+a = tf.constant([[1, 2, 3], [4, 5, 6]])
+tf.reshape(a, [6])
+>>>
+<tf.Tensor: id=2, shape=(6,), dtype=int32, numpy=array([1, 2, 3, 4, 5, 6])>
+```
+
+### 21.shape
+
+返回张量的形状，返回值是一个张量
+
+```python
+a = tf.constant([[1, 2, 3], [4, 5, 6]])
+tf.shape(a)
+>>>
+<tf.Tensor: id=3, shape=(2,), dtype=int32, numpy=array([2, 3])>
+ 
+# tensor.shape tensor.get_shape的区别
+a.shape
+a.get_shape  #输出：TensorShape([2, 3]),可以用as_list()转化成list类型
+```
+
+### 22.squeeze
+
+将大小为1的维度移除
+
+```python
+# 't' is a tensor of shape [1, 2, 1, 3, 1, 1]
+tf.shape(tf.squeeze(t))  # [2, 3]
+
+# 't' is a tensor of shape [1, 2, 1, 3, 1, 1]
+tf.shape(tf.squeeze(t, axis=[2, 4]))  # [1, 2, 3, 1]
+```
+
+### 23.stack
+
+将多个张量进行堆叠，张量的秩加1
+
+`concat`不改变张量的秩
+
+```python
+tf.stack(
+    values,
+    axis=0,
+    name='stack'
+)
+```
+
+```python
+x = tf.constant([1, 4]) 
+y = tf.constant([2, 5]) 
+z = tf.constant([3, 6]) 
+tf.stack([x, y, z]) 
+>>>
+<tf.Tensor: id=7, shape=(3, 2), dtype=int32, numpy=
+array([[1, 4],
+       [2, 5],
+       [3, 6]])>
+```
+
+### 23.tile
+
+输出张量的第i维的大小 = 输入第i维的大小 * multiples[i]
+
+```python
+tf.tile(
+    input,
+    multiples,
+    name=None
+)
+```
+
+```python
+a = tf.constant([[1,2,3],[4,5,6]], tf.int32) 
+b = tf.constant([1,2], tf.int32) 
+tf.tile(a, b)
+>>>
+<tf.Tensor: id=10, shape=(2, 6), dtype=int32, numpy=
+array([[1, 2, 3, 1, 2, 3],
+       [4, 5, 6, 4, 5, 6]])>
+       
+c = tf.constant([2,1], tf.int32) 
+tf.tile(a, c) 
+>>>
+<tf.Tensor: id=12, shape=(4, 3), dtype=int32, numpy=
+array([[1, 2, 3],
+       [4, 5, 6],
+       [1, 2, 3],
+       [4, 5, 6]])>
+```
+
+### 24.where
+
+```
+tf.where(
+    condition,
+    x=None,
+    y=None,
+    name=None
+)
+```
+
+根据条件返回`x`或`y`。如果`x`和`y`都没有提供，则返回条件为true的元素的坐标
+
+### 25.zeros和zeros_like
+
+同ones和ones_like
 
