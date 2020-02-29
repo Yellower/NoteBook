@@ -62,4 +62,5 @@
 * [TTA: Test-time autmentation](daily_notebook/test_time_augmentation.md)
 * [YOLO中anchors的设置](daily_notebook/anchors_gen_for_yolo.md)
 * [模型融合方法](daily_notebook/model_ensemble.md)
+* [图像插值](daily_notebook/图像插值.md)
 
