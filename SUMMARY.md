@@ -63,4 +63,5 @@
 * [YOLO中anchors的设置](daily_notebook/anchors_gen_for_yolo.md)
 * [模型融合方法](daily_notebook/model_ensemble.md)
 * [图像插值](daily_notebook/图像插值.md)
+* [python中的浅拷贝和深拷贝](daily_notebook/python浅拷贝和深拷贝.md)
 
