@@ -35,7 +35,7 @@
 
 * [linux查看进程信息](daily_notebook/linux-cha-kan-jin-cheng-xin-xi.md)
 * [Ubuntu桌面卡死解决办法](daily_notebook/ubuntu_desktop_freezed.md)
-* [Git添加改动](daily_notebook/git_add_file.md)
+* [Git使用](daily_notebook/git.md)
 * [ubuntu安装显卡驱动注意事项](daily_notebook/ubuntu_install_nvidia_driver.md)
 * [Markdown编辑数学公式](daily_notebook/markdown_math.md)
 * [Python Opencv的常用操作](daily_notebook/python_opencv.md)
