@@ -30,6 +30,14 @@ PixelLink是基于实例分割（instance segmentation）的，首先对每个�
 网络的输出有两部分，一部分为文本/非文本预测，一部分为连接预测，输出分别为`1*2=2`通道和`8*2=16`通道。
 特征融合采用的跳跃连接结构有两种，分别是**PixelLink+VGG16 2s**，对应结构为`{conv2_2, conv3_3, conv4_3, conv5_3, fc_7}`,输出的结果大小为原图的一半， **PixelLink+VGG16 4s**对应的结构为`{conv3_3, conv_4_3, conv_5_3, fc_7}`，输出的结果大小为原图的1/4。
 
+注意：
+
+1.上采样使用双线性插值的方式；
+
+2.pool5步长为1，所以conv5_3和fc7可以直接相加，不需要上采样；
+
+3.文本/非文本预测和连接预测分别有自己的特征融合分支，即网络实现上有两条上采样的通道；
+
 #### 3.2 如何连接像素
 对文本/非文本预测和连接预测分别设定阈值，大于阈值的为Positive，文本/非文本预测为Positive的像素为Positive pixel，连接预测为Positive的为Positive link，预测结果为Negative的类似。对Positive pixel进行连接操作，原则是如果两个Positive pixel之间的连接中有一个或两个都是Positive link就将这两个像素连接。对所有Positive pixel进行连接得到CC或实例分割结果。
 #### 3.3 提取边界框
