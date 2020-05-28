@@ -30,6 +30,8 @@
 * [SENet](paper_notebook/SENet.md)
 * [MobileNet](paper_notebook/MobileNet.md)
 * [InceptionNet](paper_notebook/Inception.md)
+* [PSENet](paper_notebook/PSENet.md)
+* [DBNet](paper_notebook/DBNet.md)
 
 ## daily\_notebook
 
