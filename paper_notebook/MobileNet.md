@@ -61,7 +61,7 @@ $$
 
 * Width Multiplier $\alpha$
 
-  每一层输入通道数$M$变成$\alpha M$，输出通道数$N$变成$\alpha N$.
+  每一层输入通道数$M$变成$\alpha M$，输出通道数$N$变成$\alpha N$。论文中设置的$\alpha \in \{1, 0.75, 0.5, 0.25\}$
 
   计算量为：
   $$
@@ -70,7 +70,7 @@ $$
 
 * Resolution Multiplier $p$
 
-  输入图片的大小变为原始大小的$p$倍
+  输入图片的大小变为原始大小的$p$倍，直接通过设置网络输入大小来实现，论文中使用的大小为{244, 192, 160, 128}
 
   则计算量为：
   $$
@@ -84,6 +84,12 @@ $$
 > 发表期刊：
 >
 > 发表时间：2018
+
+**为什么改进MobileNetV1**
+
+1.MobileNetV1的结构比较简单，仅仅是一些层的堆叠，而类似residual block这种的连接结构已经被证明是有效的，所以可以借鉴类似的结构；
+
+2.
 
 MobileNet v2在v1的基础上，采用了resnet网络中的residual block结构，主要有两个改进：
 
@@ -101,6 +107,14 @@ Residual block与Inverted residual block模块对比：
 * $3 \times 3$卷积采用depth-wish convolution
 * $3 \times 3$卷积输出深度为$t*input\_channel$，$t$为expantion ratio，大于1
 * 输出时$1\times 1$卷积采用线性激活函数
+
+**为什么中间的通道数要大？**
+
+正常的residual block先经过$1*1$卷积降低通道数，再经过$3*3$卷积减少计算量，最后通过$1*1$卷积增加通道数，两头通道数大，中间小；而在invert residual block中，由于$3*3$卷积层采用的是深度卷积，计算量小，所以可以使用大的通道数，效果会更好，所以先用$1*1$卷积升高通道数，最后的$1*1$卷积降低通道数。
+
+**为什么最后采用线性激活函数？**
+
+Xception已经实验证明了 Depthwise 卷积后再加ReLU 效果会变差
 
 Inverted residual block结构如下：
 
