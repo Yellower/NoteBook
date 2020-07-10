@@ -82,5 +82,13 @@ channels:
 show_channel_urls: true
 ```
 
+其他源：
+```
+# 中科大源
+conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/main/
+conda config --set show_channel_urls yes
+```
+
   
 
