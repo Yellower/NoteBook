@@ -71,3 +71,36 @@ nohup python train.py > /dev/null 2>&1 &
 或
 nohup python train.py > /dev/null 2>error.log & #保存错误日志
 ```
+
+7.cat
+
+`cat`有三种用法：
+
+* 1.一次性显示整个文件 
+
+  `cat filename`
+
+  示例：
+
+  ````bash
+  # 查看前10行
+  cat filename | head -n 10
+  ````
+
+* 2.创建文件 
+
+  ```shell
+  cat > test.txt
+  hello cat!! #Ctrl+D完成输入
+  
+  # 追加内容到原有文件
+  cat >> test.txt
+  ```
+
+* 3.合并几个文件
+
+  ```shell
+  cat file1 file2 > new_file
+  ```
+
+  
