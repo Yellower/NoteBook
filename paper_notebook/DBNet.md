@@ -22,7 +22,7 @@ DBNet网络结构如下：
 
 **FPN neck结构**
 
-`conv5`经过`conv_bn_relu`结构，然后经过上采样层（`resize`方式），得到`P5`；`conv4`也经过一样的`conv_bn_relu`结构，与`P5`相加或`concat`，再经过`conv(3*3)_bn_relu`进行平滑，最后经过上采样层得到`P4`。`conv_bn_relu`中的卷积层为`kernel_size=1*1,stride=1,output_channel=64`
+`conv5`经过`conv_bn_relu`结构，然后经过上采样层（`resize`方式），得到`P5`；`conv4`也经过一样的`conv_bn_relu`结构，与`P5`相加或`concat`，再经过`conv(3*3)_bn_relu`进行平滑，最后经过上采样层得到`P4`。`conv_bn_relu`中的卷积层为`kernel_size=1*1,stride=1,output_channel=64`，主要是为了将通道数固定到同样大小，方便后面的相加或`concat`操作。
 
 `pred`分支包含一个$3*3$卷积层和两个反卷积层。
 
