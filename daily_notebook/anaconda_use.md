@@ -67,7 +67,7 @@ conda remove -n env_name --all
 * 配置国内镜像源
 ```shell
 # 查看当前下载源
-conda config --show channel
+conda config --show channels
 
 # 方法一：命令行设置
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/

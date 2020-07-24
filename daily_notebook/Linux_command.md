@@ -103,4 +103,88 @@ nohup python train.py > /dev/null 2>error.log & #保存错误日志
   cat file1 file2 > new_file
   ```
 
+8.暂停、继续进程
+
+```bash
+# 暂停
+kill -STOP pid
+# 继续
+kill -CONT pid
+```
+
+9.awk
+
+`awk`是文本分析工具，把文件读入，依次对每一行处理（默认分隔符为空格）
+
+```bash
+awk '{pattern + action}' filenames
+```
+
+假设`test.txt`的内容如下：
+
+```txt
+12,34,56,78
+12,34,56,78
+12,34,56,78
+12,34,56,78
+```
+
+* 内置变量
+
+  ```
+  $n: 当前的第n个字段，比如$1表示第一个字段
+  $0: 完整的行
+  FS: 分隔的符号
+  NF: 一行记录中的分段数量
+  NR: 已经读出的行数，递增的
+  ```
+
+  示例：
+
+  ```bash
+  awk -F "," '{print $0, $1 "\t" $2 "\t" $3 " FS="FS " NF="NF " NR="NR}' test.txt
+  >>>
+  12,34,56,78 12  34      56 FS=, NF=4 NR=1
+  12,34,56,78 12  34      56 FS=, NF=4 NR=2
+  12,34,56,78 12  34      56 FS=, NF=4 NR=3
+  12,34,56,78 12  34      56 FS=, NF=4 NR=4
+  
+  # 打印某几行
+  awk '{if(NR>=2 && NR<=3) print $1}' test.txt 
+  >>>
+  12,34,56,78
+  12,34,56,78
+  ```
+
+* 参数
+
+  ```
+  -F: 指定分隔符
+  ```
+
+```bash
+# 将all_train.txt的第一列中的文件移动到./train/gt
+awk -F "\t" '{print $2}' all_train.txt | xargs -i mv {} ./train/gt/
+```
+
+#### 10.查看系统信息
+
+* 查看操作系统版本
+
+  ```shell
+  cat /proc/version
+  ```
+
+* 查看内核信息
+
+  ```bash
+  uname -a
+  ```
+
+* 查看当前操作系统发行版本信息
+
+  ```shell
+  cat /etc/centos-release
+  ```
+
   
