@@ -25,7 +25,7 @@ PSENet的主要思想是：采用基于分割的方法，这样可以适用于�
 
 PSENet的网络结构如下：
 
-![](F:\NoteBook\.gitbook\assets\PSENet网络结构.png)
+![](..\.gitbook\assets\PSENet网络结构.png)
 
 骨架网络采用FPN，将每层的预测结果上采样后进行Concat，得到F，进行n个分支的预测，每个分支得到一个特征图$S_i$，$S_1$对应最小的尺度（即最小的核）$S_n$对应原始尺度（预测的文本区域和文本区域GroundTruth一样大），最后利用Progressive Scale Expansion算法，从$S$得到最终的结果。
 
@@ -33,13 +33,13 @@ PSENet的网络结构如下：
 
 该算法主要采用BFS（广度优先搜索）的思想，从最小的核（即$S_1$层）开始一步一步向外扩张文本区域，直至最大的核（即$S_n$层）
 
-![](F:\NoteBook\.gitbook\assets\PSE算法.png)
+![](..\.gitbook\assets\PSE算法.png)
 
-![](F:\NoteBook\.gitbook\assets\PSE算法伪代码.png)
+![](..\.gitbook\assets\PSE算法伪代码.png)
 
 ### 3.实验
 
 和其他模型的对比如下：
 
-![](F:\NoteBook\.gitbook\assets\PSENet结果.png)
+![](..\.gitbook\assets\PSENet结果.png)
 

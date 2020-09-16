@@ -102,6 +102,52 @@ $$
 
 ![](../.gitbook/assets/2019-08-01 16-18-35 的屏幕截图.png)
 
+代码：
+
+```
+def weighted_merge(g, p):
+    g[:8] = (g[8] * g[:8] + p[8] * p[:8])/(g[8] + p[8])
+    g[8] = (g[8] + p[8])
+    return g
+
+def standard_nms(S, thres):
+    order = np.argsort(S[:, 8])[::-1]
+    keep = []
+    while order.size > 0:
+        i = order[0]
+        keep.append(i)
+        ovr = np.array([intersection(S[i], S[t]) for t in order[1:]])
+
+        inds = np.where(ovr <= thres)[0]
+        order = order[inds+1]
+
+    return S[keep]
+
+def nms_locality(polys, thres=0.3):
+    '''
+    locality aware nms of EAST
+    :param polys: a N*9 numpy array. first 8 coordinates, then prob. polys is sorted by row
+    :return: boxes after nms
+    '''
+    S = []
+    p = None
+    for g in polys:
+        if p is not None and intersection(g, p) > thres:
+            p = weighted_merge(g, p)
+        else:
+            if p is not None:
+                S.append(p)
+            p = g
+    if p is not None:
+        S.append(p)
+
+    if len(S) == 0:
+        return np.array([])
+    return standard_nms(np.array(S), thres)
+```
+
+
+
 ### 3. 实验结论
 
 中间结果：

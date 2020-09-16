@@ -47,6 +47,7 @@
 * [Anaconda虚拟环境使用](daily_notebook/anaconda_use.md)
 * [@property使用](daily_notebook/@property.md)
 * [Pytorch-warpctc安装](daily_notebook/pytorch_warpctc.md)
+* [Pytorch安装](daily_notebook/Pytorch_installation.md)
 * [python格式化输出时间](daily_notebook/python_time.md)
 * [python中re模块的使用](daily_notebook/re.md)
 * [深度学习卷积特征图可视化](daily_notebook/feature_map_visualization.md)
@@ -54,6 +55,7 @@
 * [Python系列](daily_notebook/python.md)
 * [Tensorflow系列](daily_notebook/Tensorflow.md)
 * [Tensorflow2.0系列](daily_notebook/Tensorflow2.md)
+* [Linux常用命令](daily_notebook/linux_command.md)
 * [Linux中`find`命令使用](daily_notebook/linux_find.md)
 * [FPN网络和OHEM](daily_notebook/FPN_and_OHEM.md)
 * [滑动平均模型](daily_notebook/moving_average_model.md)
@@ -68,4 +70,6 @@
 * [python中的浅拷贝和深拷贝](daily_notebook/python浅拷贝和深拷贝.md)
 * [可迭代的对象、迭代器和生成器](daily_notebook/可迭代对象_迭代器和生成器.md)
 * [函数装饰器和闭包](daily_notebook/函数装饰器和闭包.md)
+* [Linux安装Opencv](daily_notebook/opencv_install_linux.md)
+* [G++使用](daily_notebook/g++.md)
 

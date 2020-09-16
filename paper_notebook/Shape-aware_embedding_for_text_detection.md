@@ -46,7 +46,7 @@ SA Loss与Disc Loss对比：
 
 利用网络可以得到三种图：Embedding map、Full Map和Center Map。作者根据这三种图直接得到最终的文本检测结果。
 
-大概的流程：利用Full Map和Center Map分别得到它们的clusters，再对属于Full Map但不属于Center Map的像素判断它属于哪个Center Map的cluster。而判断的准则是Embedding map计算该像素到各个cluster的距离，选择距离最近的cluster。就可以得到文本的实例分割结果，再对分割结果找到最小的bounding box就得到检测框。
+大概的流程：利用Full Map和Center Map分别得到它们的clusters，再对属于Full Map但不属于Center Map的像素判断它属于哪个Center Map的cluster。而判断的准则是Embedding map计算该像素到各个cluster的距离（cluster取所有像素的average embedding），选择距离最近的cluster。就可以得到文本的实例分割结果，再对分割结果找到最小的bounding box就得到检测框。
 
 ![](../.gitbook/assets/2019-08-04 17-02-30 的屏幕截图.png)
 
