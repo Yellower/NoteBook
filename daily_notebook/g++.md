@@ -145,3 +145,32 @@ g++ main.cpp -L. -ldynamic -o main
 ```
 
 如果运行时报错找不到动态库文件，需要在添加环境变量`LD_LIBRARY_PATH`
+
+### 4.调试
+
+程序编译完成后，生成可执行文件或库文件，运行时可能遇到`undefined symbol`错误，这时可以借用一些工具来查找错误的原因。假设某个库文件`cv_demo.so`运行时，错误信息如下：
+
+`ImportError: /home/laifeng/Programs/OCRProject/src/ocrlib/pixel_link/cpp/test_pybind11_and_opencv/cv_demo.cpython-36m-x86_64-linux-gnu.so: undefined symbol: _ZN2cv8fastFreeEPv`
+
+ （1）查看未定义的符号是什么
+
+```
+c++filt _ZN2cv8fastFreeEPv
+>>> cv::fastFree(void*) # 可以看到符号对应的函数原来是什么，这里是opencv的函数，说明是opencv库的问题
+```
+
+（2）查看编译时，是否链接了需要的库
+
+```
+ldd -r cv_demo.so
+```
+
+输出如下：
+
+![](../.gitbook/assets/ldd.png)
+
+可以看到，编译时并没有链接`opencv`的任何库，说明编译的`g++`代码存在问题
+
+修正后，编译后的程序链接了`opencv`库，输出如下：
+
+![](../.gitbook/assets/ldd_2.png)
