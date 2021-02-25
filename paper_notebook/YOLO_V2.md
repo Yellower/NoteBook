@@ -12,7 +12,7 @@
 
   yolo v1网络虽然检测速度快，但相比于其他检测网络，mAP较低，所以作者对yolo v1进行各种改进，在保证检测速度基本不变的情况下，大幅提升了mAP值。在67 FPS下，YOLOv2在VOC2007数据集上达到了76.8 mAP。在40 FPS下，YOLOv2 达到了78.6的mAP值，比当时最好的Faster rcnn和SSD网络检测效果更好，同时速度也比它们快。
 
-  ![](F:\NoteBook\.gitbook\assets\yolov2_acc_compare.png)
+  ![](..\.gitbook\assets\yolov2_acc_compare.png)
 
 * YOLO 9000
 
@@ -20,7 +20,7 @@
 
 ### 2.YOLO v2改进
 
-![](F:\NoteBook\.gitbook\assets\yolov2_改进.png)
+![](../.gitbook\assets\yolov2_改进.png)
 
 * batch norm
 
@@ -44,7 +44,7 @@
 
   使用BN层。
 
-  ![](F:\NoteBook\.gitbook\assets\darknet19.png)
+  ![](../.gitbook\assets\darknet19.png)
 
 * dimension priors
 
@@ -56,9 +56,9 @@
 
   假设网络对每个bounding box预测的坐标为$t_x, t_y, t_w, t_h, t_o$，特征图中某一单元格距图片左上角的坐标为$(c_x, c_y)$，先验框（anchor）的宽高为$p_w, p_h$，则：
 
-  ![](F:\NoteBook\.gitbook\assets\yolov2_coor.png)
+  ![](../.gitbook\assets\yolov2_coor.png)
 
-  ![](F:\NoteBook\.gitbook\assets\yolov2_coor_calculation.png)
+  ![](../.gitbook\assets\yolov2_coor_calculation.png)
 
 * passthrough
 
@@ -78,9 +78,9 @@ voc数据集上的结果：
 
 在输入图片大小为544*544时，mAP值超过了Faster RCNN和SSD，同时保持了40FPS。
 
-![](F:\NoteBook\.gitbook\assets\yolov2_result.png)
+![](../.gitbook\assets\yolov2_result.png)
 
 COCO数据集上的结果：
 
-![](F:\NoteBook\.gitbook\assets\yolov2_result_coco.png)
+![](../.gitbook\assets\yolov2_result_coco.png)
 

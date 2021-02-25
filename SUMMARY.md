@@ -12,6 +12,11 @@
 ## 数据结构
 * [排序算法](data_structure/排序算法.md)
 
+## CUDA编程
+
+* [第三章 CUDA C简介](cuda/chapter3.md)
+* [第四章 CUDA C并行编程](cuda/chapter4.md)
+
 ## Paper Reading
 
 * [Aster](paper_notebook/aster.md)

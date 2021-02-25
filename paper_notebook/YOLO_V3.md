@@ -12,7 +12,7 @@ YOLO V3相比于V2在COCO数据集上的精度结果有了很大的提升，但�
 
 网络的预测输出值为$t_x,t_y,t_w,t_h$，预测的检测框坐标为$b_x,b_y,b_w,b_h$。损失采用平方误差损失。
 
-![](F:\NoteBook\.gitbook\assets\yolov3_coor-1577688940695.png)
+![](../.gitbook\assets\yolov3_coor-1577688940695.png)
 
 * Objectness score
 
@@ -32,15 +32,15 @@ YOLO V3采用三个分支的形式，分别输出不同尺度的特征图，在�
 
 Darknet53的网络结构如下：
 
-![](F:\NoteBook\.gitbook\assets\darknet53.png)
+![](../.gitbook\assets\darknet53.png)
 
 与Darknet19、Resnet网络的比较：
 
-![](F:\NoteBook\.gitbook\assets\darknet53_acc-1577689060001.png)
+![](../.gitbook\assets\darknet53_acc-1577689060001.png)
 
 ### 4. 结果
 
-![](F:\NoteBook\.gitbook\assets\yolov3_result.png)
+![](../.gitbook\assets\yolov3_result.png)
 
 **COCO数据集评估指标说明**
 
@@ -48,7 +48,7 @@ $AP$: 在IOU=.5:.05:.95时的AP平均值
 
 $AP_{50}$: 在IOU=.5时的AP值
 
-$AP_{75}$: 在IOU=.5时的AP值
+$AP_{75}$: 在IOU=.75时的AP值
 
 $AP_S$: 小目标的AP值，$area<32^2$
 
@@ -58,7 +58,7 @@ $AP_L$: 小目标的AP值，$area>96^2$
 
 这里$AP$都指的是$mAP$
 
-![](F:\NoteBook\.gitbook\assets\yolov3_curve_AP.png)
+![](../.gitbook\assets\yolov3_curve_AP.png)
 
-![yolov3_mAP_curve_AP50](F:\NoteBook\.gitbook\assets\yolov3_mAP_curve_AP50.png)
+![yolov3_mAP_curve_AP50](../.gitbook\assets\yolov3_mAP_curve_AP50.png)
 
