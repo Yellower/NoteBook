@@ -2,15 +2,21 @@
 
 ### Git基础
 
+* Git是分布式、版本控制、软件（分布式指的是git在本地和线上仓库都保存，而不是只保存在本地或线上）
+
+* 为什么是做版本控制？
+
+  为了保留之前的版本，方便后续进行回滚和修改
+
 * 直接记录快照，而不是差异比较
 
   其他版本控制系统大部分以文件变更列表的方式存储信息，也就是说，它们保存一组基本文件，然后在文件发生变化时，保存变化后的文件与基本文件的差异，得到新的版本
 
-  ![](F:\NoteBook\.gitbook\assets\git_1.png)
+  ![](..\.gitbook\assets\git_1.png)
 
   而Git则不同，它保存的是数据的快照。可以这样理解：在提交更新时，Git会对当时的全部文件生成一个快照（复制一份），并保存这个快照的索引，通过索引可以快速定位并恢复到到任何版本。对没有修改的文件，只保存一个指向原文件的链接，而不拷贝。
 
-  ![](F:\NoteBook\.gitbook\assets\git_2.png)
+  ![](..\.gitbook\assets\git_2.png)
 
 * Git保证完整性
 
@@ -32,7 +38,7 @@
 
 #### 1.获取Git仓库
 
-* 自己创建
+* 自己创建（可以对空的或已经存在的项目创建）
 
   ```bash
   git init
@@ -90,46 +96,27 @@
 git log
 ```
 
-#### 4.远程仓库使用
+#### 4.回滚
 
-通常先建立远程仓库，然后`git clone`克隆到本地
+* 回滚到之前的版本
 
-* 查看远程仓库
+    ```
+    1.查看版本历史，找到需要回退到的版本的版本号
+        git log
+    2.回退
+        git reset --hard 版本号
+    ```
 
-  查看本地仓库配置了哪些远程仓库
+* 回滚到之后的版本
 
-  ```bash
-  git remote //只显示远程仓库名
-  git remote -v //显示远程仓库名和url
-  ```
+    ```
+git reflog
+    git reset --hard 版本号
+    ```
 
-* 添加远程仓库
+## 分支
 
-  ```bash
-  git remote add 远程仓库名 远程仓库url
-  //示例：
-  git remote add pb https://github.com/paulboone/ticgit
-  ```
-
-  远程仓库名只是对url的一个替代，可以自定义
-
-* 抓取
-
-  获取远程仓库中的数据
-
-  ```bash
-  git fetch 远程仓库名
-  ```
-
-* 推送
-
-  将本地仓库的某个分支推送给某个远程仓库
-
-  ```bash
-  git push origin master //把master分支推送给origin远程仓库
-  ```
-
-#### 5.分支操作
+#### 1.分支操作
 
 * 查看所有分支
 
@@ -142,25 +129,91 @@ git log
 
   上面一共三个分支，其中*表示当前所处的分支（即HEAD指向的分支）
 
-* 创建和切换分支
+* 创建分支
 
   ```bash
-  //创建
   git branch 分支名
-  //切换
-  git checkout 另一分支名
   
-  //创建并切换
-  git checkout -b 分支名
+  创建并切换到分支
+  git checkout -b 分支名 
   ```
+  
+* 切换分支
 
+  ```
+git checkout 另一分支名
+  ```
+  
 * 合并分支
 
-  将当前分支与另一分支合并
+  将另一分支合并到当前分支，合并时有可能会发生内容冲突，需要自行决定合并时保留的内容
 
   ```bash
   git merge 另一分支
   ```
 
-  通常合并分支时，有可能会发生内容冲突，需要自行决定合并时保留的内容
+* 删除分支
 
+  ```
+  git branch -d 分支名
+  ```
+
+#### 2.紧急修复bug
+
+![git修复bug](../.gitbook/assets/git修复bug.png)
+
+通常开发时，新建一个dev分支进行代码开发，功能开发完成后再合并到master分支。当需要紧急修复线上（master）Bug时，先创建bug分支，切换到bug分支修复bug，然后合并到master分支，再切换到dev分支继续之前的开发
+
+```
+假设当前再dev分支开发，需要修复bug
+1. git checkout master
+2. git branch bug
+3. git checkout bug
+4. 修复bug，并提交
+5. git checkout master
+6. git merge bug 合并完后可以删除bug分支
+7. git checkout dev
+8. 继续开发
+```
+
+## 远程仓库
+
+#### 1.Github仓库
+
+* 将本地项目上传到远程github仓库
+
+    ```
+    1. github创建仓库，最好与本地同名
+    2. 为远程仓库地址取别名
+    	git remote add origin 远程仓库url
+    3. 推送到远程仓库
+    	git push origin 分支
+    ```
+
+* clone远程仓库
+
+  ```
+  1. 克隆远程仓库到本地（克隆后看不见其他分支，但都克隆下来了，可以直接切换）
+  	git clone 远程仓库url
+  ```
+
+* 查看远程仓库
+
+  查看本地仓库配置了哪些远程仓库
+
+  ```bash
+  git remote //只显示远程仓库名
+  git remote -v //显示远程仓库名和url
+  ```
+
+
+* 更新代码
+
+  ```
+  git pull origin dev
+  等价于
+  git fetch origin dev
+  git merge dev
+  ```
+
+  
